@@ -1,9 +1,15 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+employees = Employee.create([
+  { name: 'Ernesto', color: '#ebb37c' },
+  { name: 'Bárbara', color: '#b7809e' },
+  { name: 'Benjamín', color: '#76a0e1' }
+])
+
+services = Service.create([
+  { name: 'Monitoreo Recorrido.cl', week_start_time: '19:00', week_end_time: '00:00', weekend_start_time: '10:00', weekend_end_time: '00:00' }
+])
+
+availabilities = Availability.create([
+  { employee: employees.first, service: services.first, date: '2024-08-05', start_time: '19:00', end_time: '21:00' },
+  { employee: employees.second, service: services.first, date: '2024-08-05', start_time: '21:00', end_time: '00:00' },
+  { employee: employees.third, service: services.first, date: '2024-08-06', start_time: '19:00', end_time: '22:00' }
+])

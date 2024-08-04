@@ -1,0 +1,13 @@
+jose_delgado_availability:
+  employee: jose_delgado
+  service: monitoring_service
+  date: <%= Date.today %>
+  start_time: "19:00"
+  end_time: "21:00"
+
+saul_hernandez_availability:
+  employee: saul_hernandez
+  service: monitoring_service
+  date: <%= Date.tomorrow %>
+  start_time: "10:00"
+  end_time: "12:00"
