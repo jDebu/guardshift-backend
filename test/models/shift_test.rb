@@ -1,6 +1,8 @@
 require "test_helper"
 
 class ShiftTest < ActiveSupport::TestCase
+  fixtures :all
+
   def setup
     @shift = shifts(:jose_delgado_shift)
   end
@@ -16,6 +18,11 @@ class ShiftTest < ActiveSupport::TestCase
 
   test "service should be present" do
     @shift.service = nil
+    assert_not @shift.valid?
+  end
+
+  test "date should be present" do
+    @shift.date = nil
     assert_not @shift.valid?
   end
 

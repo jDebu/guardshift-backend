@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_04_055923) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_04_110803) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,16 +46,31 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_04_055923) do
   create_table "shifts", force: :cascade do |t|
     t.bigint "employee_id", null: false
     t.bigint "service_id", null: false
-    t.datetime "start_time"
-    t.datetime "end_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "date", null: false
+    t.time "start_time", null: false
+    t.time "end_time", null: false
     t.index ["employee_id"], name: "index_shifts_on_employee_id"
     t.index ["service_id"], name: "index_shifts_on_service_id"
+  end
+
+  create_table "time_blocks", force: :cascade do |t|
+    t.string "blockable_type"
+    t.bigint "blockable_id"
+    t.date "date", null: false
+    t.time "start_time", null: false
+    t.time "end_time", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "availability_time_block_id"
+    t.index ["availability_time_block_id"], name: "index_time_blocks_on_availability_time_block_id"
+    t.index ["blockable_type", "blockable_id"], name: "index_time_blocks_on_blockable"
   end
 
   add_foreign_key "availabilities", "employees"
   add_foreign_key "availabilities", "services"
   add_foreign_key "shifts", "employees"
   add_foreign_key "shifts", "services"
+  add_foreign_key "time_blocks", "time_blocks", column: "availability_time_block_id"
 end

@@ -1,6 +1,8 @@
 require "test_helper"
 
 class AvailabilityTest < ActiveSupport::TestCase
+  fixtures :all
+
   def setup
     @availability = availabilities(:jose_delgado_availability)
   end
@@ -33,4 +35,5 @@ class AvailabilityTest < ActiveSupport::TestCase
     @availability.end_time = nil
     assert_not @availability.valid?
   end
+
 end

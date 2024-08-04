@@ -1,11 +1,13 @@
 jose_delgado_shift:
   employee: jose_delgado
   service: monitoring_service
-  start_time: <%= 2.days.ago %>
-  end_time: <%= 2.days.ago + 2.hours %>
+  date: <%= Date.today %>
+  start_time: "19:00"
+  end_time: "21:00"
 
 saul_hernandez_shift:
   employee: saul_hernandez
   service: monitoring_service
-  start_time: <%= 1.days.ago %>
-  end_time: <%= 1.days.ago + 3.hours %>
+  date: <%= Date.tomorrow %>
+  start_time: "10:00"
+  end_time: "12:00"
