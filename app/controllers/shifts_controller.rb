@@ -4,6 +4,7 @@ class ShiftsController < ApplicationController
   def index
     start_date = Date.parse(shifts_params[:start_date])
     end_date = Date.parse(shifts_params[:end_date])
+    service_id = shifts_params[:service_id]
   
     employees = Employee.order(:id).select(:id, :name)
     employee_counts = employees.each_with_object({}) { |e, h| h[e.id] = { name: e.name, total: 0, color: e.color } }
@@ -13,6 +14,7 @@ class ShiftsController < ApplicationController
     (start_date..end_date).each do |date|
       day_name = date.strftime('%A %d de %B')
       time_blocks = TimeBlock.where(date: date, blockable_type: 'Shift').includes(blockable: :employee)
+      time_blocks = time_blocks.joins(:service).where(services: { id: service_id }) if service_id.present?
       time_blocks = time_blocks.sort_by { |tb| [tb.start_time.hour, tb.start_time.min] }
   
       next if time_blocks.empty?
@@ -54,11 +56,27 @@ class ShiftsController < ApplicationController
       days: days
     }
   end
+
+  def weeks
+    start_date = Date.commercial(2020, 10, 1)
+    weeks = []
+
+    5.times do |i|
+      week_start = start_date + (i * 7)
+      week_end = week_start + 6
+      label = "Semana #{week_start.cweek} del #{week_start.year}"
+      value = "#{week_start} #{week_end}"
+      value_name = "del #{week_start.strftime('%d/%m/%Y')} al #{week_end.strftime('%d/%m/%Y')}"
+      weeks << { label: label, value: value, value_name: value_name }
+    end
+
+    render json: { weeks: weeks }
+  end
   
   private
 
   def shifts_params
-    params.permit(:start_date, :end_date)
+    params.permit(:start_date, :end_date, :service_id)
   end
 
   def validate_date_range
