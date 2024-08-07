@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :availabilities, only: [:index, :update]
+  resources :availabilities, only: [:index, :create]
   resources :shifts, only: [:index] do
     collection do
       get 'weeks', to: 'shifts#weeks'
