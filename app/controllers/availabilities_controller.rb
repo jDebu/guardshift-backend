@@ -69,8 +69,8 @@ class AvailabilitiesController < ApplicationController
     service_id = params[:service_id]
     employee_id = params[:employee_id]
     date = Date.parse(params[:date])
-    start_time = Time.parse(params[:start_time])
-    end_time = Time.parse(params[:end_time])
+    start_time = Time.zone.parse(params[:start_time])
+    end_time = Time.zone.parse(params[:end_time])
     block_id = params[:block_id]
     block_shift_id = params[:block_shift_id]
 

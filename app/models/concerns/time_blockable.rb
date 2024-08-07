@@ -25,8 +25,8 @@ module TimeBlockable
 
   def create_standard_time_blocks(end_hour)
     (start_time.hour..end_hour).each do |hour|
-      start_time_obj = Time.parse("#{hour}:00")
-      end_time_obj = Time.parse("#{(hour + 1) % 24}:00")
+      start_time_obj = Time.zone.parse("#{hour}:00")
+      end_time_obj = Time.zone.parse("#{(hour + 1) % 24}:00")
 
       TimeBlock.create!(
         date: date,
@@ -41,8 +41,8 @@ module TimeBlockable
     success = true
     ActiveRecord::Base.transaction do
       (start_time.hour..end_hour).each do |hour|
-        start_time_obj = Time.parse("#{hour}:00")
-        end_time_obj = Time.parse("#{hour + 1 == 24 ? 0 : hour + 1}:00")
+        start_time_obj = Time.zone.parse("#{hour}:00")
+        end_time_obj = Time.zone.parse("#{hour + 1 == 24 ? 0 : hour + 1}:00")
 
         availability_block = find_availability_block(start_time_obj, end_time_obj)
 
